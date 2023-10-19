@@ -29,6 +29,12 @@ async function run() {
 
         const productsCollection = client.db('productsDB').collection('products');
 
+
+        app.get('/products', async (req, res) => {
+            const result = await productsCollection.find().toArray();
+            res.send(result);
+        })
+
         app.post('/products', async (req, res) =>{
             const newProduct = req.body;
             console.log(newProduct);
