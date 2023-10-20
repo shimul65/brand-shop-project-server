@@ -29,6 +29,8 @@ async function run() {
 
         const productsCollection = client.db('productsDB').collection('products');
 
+        const cartProductsCollection = client.db('productsDB').collection('cartProducts');
+
 
         app.get('/products', async (req, res) => {
             const result = await productsCollection.find().toArray();
@@ -67,6 +69,21 @@ async function run() {
             const newProduct = req.body;
             console.log(newProduct);
             const result = await productsCollection.insertOne(newProduct);
+            res.send(result);
+        })
+
+
+        // cart product related API
+
+        app.get('/cartProducts', async (req, res) => {
+            const result = await cartProductsCollection.find().toArray();
+            res.send(result);
+        })
+
+        app.post('/cartProducts', async (req, res) => {
+            const newCartProduct = req.body;
+            console.log(newCartProduct);
+            const result = await cartProductsCollection.insertOne(newCartProduct);
             res.send(result);
         })
 
