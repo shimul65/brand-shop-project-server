@@ -80,10 +80,24 @@ async function run() {
             res.send(result);
         })
 
+        app.get('/cartProducts/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await cartProductsCollection.findOne(query);
+            res.send(result);
+        })
+
         app.post('/cartProducts', async (req, res) => {
             const newCartProduct = req.body;
             console.log(newCartProduct);
             const result = await cartProductsCollection.insertOne(newCartProduct);
+            res.send(result);
+        })
+
+        app.delete('/cartProducts/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await cartProductsCollection.deleteOne(query);
             res.send(result);
         })
 
